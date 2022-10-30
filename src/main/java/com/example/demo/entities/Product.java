@@ -6,15 +6,15 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "producto")
+@Table(name = "product")
 @Getter @Setter
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String nombre;
-    private Double precio;
+    private String name;
+    private Double price;
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
