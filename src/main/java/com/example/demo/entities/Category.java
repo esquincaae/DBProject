@@ -10,13 +10,14 @@ import java.util.List;
 @Table(name = "categoria")
 @Getter @Setter
 public class Category {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    private Long id;
 
     private String nombre;
 
 
-    @OneToMany
+    @OneToMany(mappedBy = "category")
     private List<Product> product;
 }
