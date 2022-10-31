@@ -1,11 +1,10 @@
 package com.example.demo.controllers.dto.responses;
+
 import lombok.*;
 
 @Getter @Setter
-public class GetUserResponse {
-    private String email;
+public class GetProductResponse {
+    private String name;
+    private Double price;
     private Long id;
-    private String password;
-
-
 }
