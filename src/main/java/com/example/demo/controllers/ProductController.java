@@ -1,7 +1,7 @@
 package com.example.demo.controllers;
 
-import com.amazonaws.services.servicecatalog.model.UpdateProductRequest;
 import com.example.demo.controllers.dto.requests.CreateProductRequest;
+import com.example.demo.controllers.dto.requests.UpdateProductRequest;
 import com.example.demo.controllers.dto.responses.GetProductResponse;
 import com.example.demo.services.interfaces.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,7 @@ import java.util.List;
 public class ProductController {
 
     @Autowired
-    @Qualifier("productos")
+    @Qualifier("producto")
     private IProductService service;
 
     @GetMapping
