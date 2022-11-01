@@ -14,6 +14,6 @@ public class Rol {
     private Long id;
     private String nombre;
 
-    @OneToOne(mappedBy = "roleUser")
+    @OneToOne(mappedBy = "role")
     private User user;
 }

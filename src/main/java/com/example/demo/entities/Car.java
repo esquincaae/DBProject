@@ -16,4 +16,8 @@ public class Car {
     private Long id;
 
     private Double precioTotal;
+
+    @ManyToOne()
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
 }
