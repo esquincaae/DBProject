@@ -13,7 +13,10 @@ public class Rol {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nombre;
-
-    @OneToOne(mappedBy = "role")
+/*
+    @OneToOne(mappedBy = "roleUser")
     private User user;
+
+ */
+    //@OneToMany
 }
