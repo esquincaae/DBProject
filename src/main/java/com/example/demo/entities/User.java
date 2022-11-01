@@ -15,8 +15,8 @@ public class User {
     private String email;
     private String password;
 
-    @ManyToMany
+    @OneToOne
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"),
                 inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private List<Rol> roleUsers;
+    private Rol roleUsers;
 }

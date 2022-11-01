@@ -15,6 +15,6 @@ public class Rol {
     private Long id;
     private String nombre;
 
-    @ManyToMany(mappedBy = "roleUsers")
-    private List<User> user;
+    @OneToOne(mappedBy = "roleUsers")
+    private User user;
 }
