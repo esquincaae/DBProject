@@ -18,5 +18,5 @@ public class User {
     @OneToOne
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"),
                 inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Rol roleUsers;
+    private Rol roleUser;
 }
