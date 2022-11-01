@@ -7,6 +7,7 @@ public class CreateUserResponse {
     private String email;
     private Long id;
     private String password;
+    private Long tipo;
 
 
 }

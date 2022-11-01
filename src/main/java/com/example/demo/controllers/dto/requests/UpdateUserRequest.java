@@ -6,4 +6,5 @@ import lombok.*;
 public class UpdateUserRequest {
     private String email;
     private String password;
+    private Long tipo;
 }
