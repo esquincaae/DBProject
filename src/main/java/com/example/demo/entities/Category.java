@@ -19,5 +19,5 @@ public class Category {
 
 
     @OneToMany(mappedBy = "category")
-    private List<Product> product;
+    private List<Product> products;
 }

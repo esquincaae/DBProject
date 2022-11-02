@@ -2,8 +2,8 @@ package com.example.demo.entities;
 
 import lombok.Getter;
 import lombok.Setter;
-
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "product")
@@ -15,7 +15,12 @@ public class Product {
 
     private String name;
     private Double price;
-    @ManyToOne
+
+    @ManyToOne()
     @JoinColumn(name = "category_id")
     private Category category;
+
+    @OneToMany(mappedBy = "product_id")
+    private List<Car> cars;
+
 }

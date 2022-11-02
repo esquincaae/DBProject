@@ -3,6 +3,7 @@ package com.example.demo.entities;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "user")
@@ -11,16 +12,13 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String email;
     private String password;
-    private Long tipo;
 
-/*
-    @OneToOne
-    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"),
-                inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Rol roleUser;*/
+    @OneToMany(mappedBy = "user_id")
+    private List<Car> cars;
     @ManyToOne
-    @JoinColumn (name = "product_rol")
-    public Rol rol;
+    @JoinColumn (name = "role_id", referencedColumnName = "id")
+    public Rol role;
 }

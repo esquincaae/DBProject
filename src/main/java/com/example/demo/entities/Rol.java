@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name="rol")
@@ -18,5 +19,6 @@ public class Rol {
     private User user;
 
  */
-    //@OneToMany
+    @OneToMany(mappedBy = "role")
+    private List<User> users;
 }
