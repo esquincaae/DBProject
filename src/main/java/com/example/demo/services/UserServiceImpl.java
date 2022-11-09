@@ -2,8 +2,12 @@ package com.example.demo.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.*;
+
+import com.example.demo.entities.Rol;
 import com.example.demo.entities.User;
+import com.example.demo.repositories.IRolRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.example.demo.controllers.dto.requests.CreateUserRequest;
@@ -17,6 +21,9 @@ public class UserServiceImpl implements IUserService{
     
     @Autowired
     private IUserRepository repository;
+
+    @Autowired
+    private IRolRepository rolRepository;
 
     @Override
     public GetUserResponse get(Long id){ return from(id); }
@@ -36,7 +43,13 @@ public class UserServiceImpl implements IUserService{
     
     @Override
     public GetUserResponse create(CreateUserRequest request){
-        User user = from(request);
+        //User user = from(request);
+        User user = new User();
+        user.setEmail(request.getEmail());
+        user.setPassword(request.getPassword());
+        Optional<Rol> rol = rolRepository.findById(request.getRolId());
+        user.setRole(rol.get());
+
         return from(repository.save(user));
     }
 

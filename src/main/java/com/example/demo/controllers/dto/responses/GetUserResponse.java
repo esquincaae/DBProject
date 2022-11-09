@@ -7,5 +7,5 @@ public class GetUserResponse {
     private String email;
     private Long id;
     private String password;
-    private Rol role;
+    private Long role_id;
 }

@@ -20,5 +20,5 @@ public class User {
     private List<Car> cars;
     @ManyToOne
     @JoinColumn (name = "role_id", referencedColumnName = "id")
-    public Rol role;
+    private Rol role;
 }

@@ -7,6 +7,6 @@ import lombok.*;
 public class CreateUserRequest {
     private String email;
     private String password;
-    private Rol rol;
+    private Long rolId;
 
 }
