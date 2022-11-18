@@ -78,10 +78,12 @@ public class UserServiceImpl implements IUserService{
         response.setId(user.getId());
         response.setEmail(user.getEmail());
         response.setPassword(user.getPassword());
+        response.setRole_id(user.getRole().getId());        
         return response;
     }
 
     private GetUserResponse from(Long idUser){
+
         return repository
                 .findById(idUser)
                 .map(this::from)

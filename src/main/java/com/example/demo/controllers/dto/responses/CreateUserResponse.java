@@ -8,7 +8,11 @@ public class CreateUserResponse {
     private String email;
     private Long id;
     private String password;
+<<<<<<< HEAD
     private Long rolId;
+=======
+    private Long rol;
+>>>>>>> 2cb5f4c84dceea73203c934ab3b8a15261354c3e
 
 
 }
