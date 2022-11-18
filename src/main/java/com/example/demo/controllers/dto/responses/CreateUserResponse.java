@@ -8,7 +8,7 @@ public class CreateUserResponse {
     private String email;
     private Long id;
     private String password;
-    private Rol rol;
+    private Long rolId;
 
 
 }

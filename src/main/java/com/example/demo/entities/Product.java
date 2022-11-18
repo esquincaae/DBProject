@@ -1,5 +1,6 @@
 package com.example.demo.entities;
 
+import com.example.demo.entities.pivots.CarProduct;
 import lombok.Getter;
 import lombok.Setter;
 import javax.persistence.*;
@@ -15,12 +16,13 @@ public class Product {
 
     private String name;
     private Double price;
+    private Integer cant;
 
     @ManyToOne()
     @JoinColumn(name = "category_id")
     private Category category;
 
-    @OneToMany(mappedBy = "product_id")
-    private List<Car> cars;
+    @OneToMany(mappedBy = "")
+    private List<CarProduct> carProduct;
 
 }
