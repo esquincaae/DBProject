@@ -2,7 +2,6 @@ package com.example.demo.services;
 
 import com.example.demo.controllers.dto.requests.CreateCarProductRequest;
 import com.example.demo.controllers.dto.requests.UpdateCarProductRequest;
-import com.example.demo.controllers.dto.responses.CreateCarProductResponse;
 import com.example.demo.controllers.dto.responses.GetCarProductResponse;
 import com.example.demo.controllers.dto.responses.GetUserResponse;
 import com.example.demo.entities.Product;
@@ -10,15 +9,17 @@ import com.example.demo.entities.pivots.CarProduct;
 import com.example.demo.repositories.ICarProductRepository;
 import com.example.demo.repositories.ICarRepository;
 import com.example.demo.repositories.ProductRepository;
+import com.example.demo.services.interfaces.ICarProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
-public class CarProductService {
+public class CarProductService implements ICarProductService{
     @Autowired
     private ICarProductRepository repository;
     @Autowired
@@ -38,8 +39,11 @@ public class CarProductService {
                 .findAll()
                 .stream()
                 .map(this::from)
-                .collect(collectors.toList());
+                .collect(Collectors.toList());
     }
+
+    @Override
+    public void delete(Long id){repository.deleteById(id);}
 
     @Override
     public GetCarProductResponse create(CreateCarProductRequest request){
@@ -47,6 +51,7 @@ public class CarProductService {
         carProduct.setProductId(request.getProductId());
         carProduct.setCarId(request.getCarId());
         Optional<Product> product = ProductRepository.findById(request.getProductId());
+        carProduct.setProductId(product.get());
         return from(repository.save(carProduct));
     }
 
