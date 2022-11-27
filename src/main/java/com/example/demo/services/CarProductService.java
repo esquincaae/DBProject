@@ -3,7 +3,7 @@ package com.example.demo.services;
 import com.example.demo.controllers.dto.requests.CreateCarProductRequest;
 import com.example.demo.controllers.dto.requests.UpdateCarProductRequest;
 import com.example.demo.controllers.dto.responses.GetCarProductResponse;
-import com.example.demo.controllers.dto.responses.GetUserResponse;
+import com.example.demo.entities.Car;
 import com.example.demo.entities.Product;
 import com.example.demo.entities.pivots.CarProduct;
 import com.example.demo.repositories.ICarProductRepository;
@@ -48,10 +48,11 @@ public class CarProductService implements ICarProductService{
     @Override
     public GetCarProductResponse create(CreateCarProductRequest request){
         CarProduct carProduct = new CarProduct();
-        carProduct.setProductId(request.getProductId());
-        carProduct.setCarId(request.getCarId());
-        Optional<Product> product = ProductRepository.findById(request.getProductId());
+        Optional<Product> product = productRepository.findById(request.getProductId());
+        Optional<Car> car = carRepository.findById(request.getCarId());
         carProduct.setProductId(product.get());
+        carProduct.setCantProd(carProduct.getCantProd());
+        carProduct.setCarId(car.get());
         return from(repository.save(carProduct));
     }
 
@@ -62,27 +63,30 @@ public class CarProductService implements ICarProductService{
         return from(carProduct);
     }
 
-    private CarProduct from(CreateCarProductRequest request){
+    private CarProduct update(CarProduct carProduct, UpdateCarProductRequest request){
+        carProduct.setCantProd(request.getCantProd());
+        return carProduct;
+    }
+
+    /*private CarProduct from(CreateCarProductRequest request){
         CarProduct carProduct = new CarProduct();
         carProduct.setProductId(request.getProductId());
         carProduct.setCarId(request.getCarId());
         return carProduct;
-    }
+    }*/
 
     private GetCarProductResponse from(CarProduct carProduct){
         GetCarProductResponse response = new GetCarProductResponse();
         response.setId(carProduct.getId());
         response.setProductId(carProduct.getProductId().getId());
-        response.setCantProd(carProduct.getCantProd());
         response.setCarId(carProduct.getCarId().getId());
         return response;
     }
 
-    private GetUserResponse from(Long idCarProduct){
+    private GetCarProductResponse from(Long idCarProduct){
         return repository
                 .findById(idCarProduct)
                 .map(this::from)
                 .orElseThrow(() -> new RuntimeException("El carrito no existe"));
     }
-
 }

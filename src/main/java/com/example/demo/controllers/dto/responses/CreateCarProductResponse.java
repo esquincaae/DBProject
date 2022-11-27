@@ -9,7 +9,7 @@ public class CreateCarProductResponse {
     private Long id;
     private Long productId;
     private Integer cantProd;
+    private Double totalPrice;
     private Long carId;
     private Long UserId;
-    private Double totalPrice;
 }

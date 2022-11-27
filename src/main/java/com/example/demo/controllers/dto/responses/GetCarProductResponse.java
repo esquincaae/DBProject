@@ -8,7 +8,7 @@ public class GetCarProductResponse {
     private Long id;
     private Long productId;
     private Integer cantProd;
-    private Long carId;
-    private Long UserId;
     private Double totalPrice;
+    private Long carId;
+    private Long userId;
 }

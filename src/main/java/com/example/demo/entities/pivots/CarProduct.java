@@ -23,4 +23,6 @@ public class CarProduct {
     @JoinColumn(name = "product_id", referencedColumnName = "id")
     private Product productId;
 
+    private Integer cantProd;
+
 }
