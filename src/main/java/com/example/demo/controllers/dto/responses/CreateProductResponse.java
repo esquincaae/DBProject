@@ -4,7 +4,10 @@ import lombok.*;
 
 @Getter @Setter @NoArgsConstructor
 public class CreateProductResponse {
+    private Long id;
     private String name;
     private Double price;
-    private Long id;
+    private Integer cantprod;
+    private Long categoryId;
+
 }

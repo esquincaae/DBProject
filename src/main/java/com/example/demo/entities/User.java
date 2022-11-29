@@ -16,8 +16,9 @@ public class User {
     private String email;
     private String password;
 
-    @OneToMany(mappedBy = "user_id")
-    private List<Car> cars;
+    @OneToOne()
+    @JoinColumn(name = "car_id", referencedColumnName = "id")
+    private Car car_id;
     @ManyToOne
     @JoinColumn (name = "role_id", referencedColumnName = "id")
     private Rol role;

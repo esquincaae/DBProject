@@ -4,7 +4,9 @@ import lombok.*;
 
 @Getter @Setter
 public class GetProductResponse {
-    private String name;
-    private Double price;
     private Long id;
+    private String name;
+    private Integer cantprod;
+    private Double price;
+    private Long categoryId;
 }
