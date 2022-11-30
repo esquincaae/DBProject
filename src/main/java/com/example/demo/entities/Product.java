@@ -4,7 +4,6 @@ import com.example.demo.entities.pivots.CarProduct;
 import lombok.Getter;
 import lombok.Setter;
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name = "product")
@@ -22,7 +21,7 @@ public class Product {
     @JoinColumn(name = "category_id")
     private Category category;
 
-    @OneToMany(mappedBy = "")
-    private List<CarProduct> carProduct;
+    //@OneToMany(mappedBy = "")
+    //private List<CarProduct> carProduct;
 
 }

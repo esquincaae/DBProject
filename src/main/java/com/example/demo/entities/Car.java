@@ -19,11 +19,10 @@ public class Car {
 
     private Double precioTotal;
 
-    @ManyToOne()
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @OneToOne(mappedBy = "car_id")
     private User user_id;
 
     @OneToMany(mappedBy = "carId")
-    private List<CarProduct> carProduct;
+    private List<CarProduct> carProducts;
 
 }

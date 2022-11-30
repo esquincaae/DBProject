@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 @RestController
-@RequestMapping("Product")
+@RequestMapping("product")
 public class ProductController {
 
     @Autowired
-    @Qualifier("producto")
+    @Qualifier("product")
     private IProductService service;
 
     @GetMapping
