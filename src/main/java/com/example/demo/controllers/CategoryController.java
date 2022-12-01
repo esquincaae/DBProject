@@ -1,8 +1,7 @@
 package com.example.demo.controllers;
 
-import com.example.demo.controllers.dto.requests.CreateCategoryRequest;
-import com.example.demo.controllers.dto.requests.UpdateCategoryRequest;
-import com.example.demo.controllers.dto.responses.GetCategoryResponse;
+import com.example.demo.controllers.dto.requests.CategoryRequest;
+import com.example.demo.controllers.dto.responses.CategoryResponse;
 import com.example.demo.services.interfaces.ICategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -19,16 +18,16 @@ public class CategoryController {
     private ICategoryService service;
 
     @GetMapping
-    public List<GetCategoryResponse> list(){return service.list();}
+    public List<CategoryResponse> list(){return service.list();}
 
     @GetMapping("{id}")
-    public GetCategoryResponse get(@PathVariable Long id){return service.get(id);}
+    public CategoryResponse get(@PathVariable Long id){return service.get(id);}
 
     @PostMapping
-    public GetCategoryResponse create(@RequestBody CreateCategoryRequest request){return service.create(request);}
+    public CategoryResponse create(@RequestBody CategoryRequest request){return service.create(request);}
 
     @PutMapping("{id}")
-    public GetCategoryResponse update(@PathVariable Long id, @RequestBody UpdateCategoryRequest request) {
+    public CategoryResponse update(@PathVariable Long id, @RequestBody CategoryRequest request) {
         return service.update(id, request);
     }
     @DeleteMapping("{id}")

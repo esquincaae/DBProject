@@ -5,9 +5,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter @Setter @NoArgsConstructor
-public class CreateCarProductRequest {
+public class CartRequest {
     private Long id;
+    private Long userId;
     private Long productId;
-    private Integer cantProd;
-    private Long carId;
+    private Integer quantity;
 }

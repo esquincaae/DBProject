@@ -1,8 +1,7 @@
 package com.example.demo.services;
 
-import com.example.demo.controllers.dto.requests.CreateRolRequest;
-import com.example.demo.controllers.dto.requests.UpdateRolRequest;
-import com.example.demo.controllers.dto.responses.GetRolResponse;
+import com.example.demo.controllers.dto.requests.RolRequest;
+import com.example.demo.controllers.dto.responses.RolResponse;
 import com.example.demo.entities.Rol;
 import com.example.demo.repositories.IRolRepository;
 import com.example.demo.services.interfaces.IRolService;
@@ -19,11 +18,11 @@ public class RolService implements IRolService {
     private IRolRepository repository;
 
     @Override
-    public GetRolResponse get(Long id){ return from(id); }
+    public RolResponse get(Long id){ return from(id); }
 
     @Override
-    public List<GetRolResponse> list(){
-        List<GetRolResponse> responses = new ArrayList<>();
+    public List<RolResponse> list(){
+        List<RolResponse> responses = new ArrayList<>();
         return repository
                 .findAll()
                 .stream()
@@ -35,39 +34,39 @@ public class RolService implements IRolService {
     public void delete(Long id){repository.deleteById(id);}
 
     @Override
-    public GetRolResponse create(CreateRolRequest request){
+    public RolResponse create(RolRequest request){
         Rol rol = from(request);
         return from(repository.save(rol));
     }
 
     @Override
-    public GetRolResponse update(Long id, UpdateRolRequest request){
+    public RolResponse update(Long id, RolRequest request){
         Rol rol = repository.findById(id).orElseThrow(() -> new RuntimeException("El rol no existe"));
         rol = update(rol, request);
         return from(rol);
     }
 
-    private Rol update(Rol rol, UpdateRolRequest request){
+    private Rol update(Rol rol, RolRequest request){
         rol.setNombre(request.getName());
         //user.setPassword(request.getPassword());
         return repository.save(rol);
     }
 
-    private Rol from(CreateRolRequest request){
+    private Rol from(RolRequest request){
         Rol rol = new Rol();
         rol.setNombre(request.getName());
         //user.setPassword(request.getPassword());
         return rol;
     }
 
-    private GetRolResponse from(Rol rol){
-        GetRolResponse response =  new GetRolResponse();
+    private RolResponse from(Rol rol){
+        RolResponse response =  new RolResponse();
         response.setId(rol.getId());
         response.setName(rol.getNombre());
         return response;
     }
 
-    private GetRolResponse from(Long idRol){
+    private RolResponse from(Long idRol){
         return repository
                 .findById(idRol)
                 .map(this::from)

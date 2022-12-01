@@ -1,9 +1,9 @@
 package com.example.demo.entities;
 
+import com.example.demo.entities.pivots.Cart;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name = "user")
@@ -16,9 +16,6 @@ public class User {
     private String email;
     private String password;
 
-    @OneToOne()
-    @JoinColumn(name = "car_id", referencedColumnName = "id")
-    private Car car_id;
     @ManyToOne
     @JoinColumn (name = "role_id", referencedColumnName = "id")
     private Rol role;

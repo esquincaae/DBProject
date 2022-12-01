@@ -1,11 +1,12 @@
 package com.example.demo.controllers;
 
-import com.example.demo.controllers.dto.requests.CreateUserRequest;
-import com.example.demo.controllers.dto.requests.UpdateUserRequest;
-import com.example.demo.controllers.dto.responses.GetUserResponse;
+import com.amazonaws.Response;
+import com.example.demo.controllers.dto.requests.UserRequest;
+import com.example.demo.controllers.dto.responses.UserResponse;
 import com.example.demo.services.interfaces.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,17 +20,20 @@ public class UserController {
     private IUserService service;
 
     @GetMapping
-    public List<GetUserResponse> list(){return service.list();}
+    public List<UserResponse> list(){return service.list();}
 
     @GetMapping("{id}")
-    public GetUserResponse get(@PathVariable Long id){return service.get(id);}
+    public UserResponse get(@PathVariable Long id){return service.get(id);}
 
     @PostMapping
-    public GetUserResponse create(@RequestBody CreateUserRequest request){return service.create(request);}
+    public ResponseEntity create(@RequestBody UserRequest request){
+        return ResponseEntity.ok(service.create(request));
+    }
     
     @PutMapping("{id}")
-    public GetUserResponse update(@PathVariable Long id, @RequestBody UpdateUserRequest request) {
-        return service.update(id, request);
+    public ResponseEntity update(@PathVariable Long id, @RequestBody UserRequest request) {
+        service.update(id, request);
+        return ResponseEntity.ok().build();
     }
     @DeleteMapping("{id}")
     public void delete(@PathVariable Long id){

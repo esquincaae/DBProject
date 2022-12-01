@@ -1,8 +1,7 @@
 package com.example.demo.services;
 
-import com.example.demo.controllers.dto.requests.CreateProductRequest;
-import com.example.demo.controllers.dto.requests.UpdateProductRequest;
-import com.example.demo.controllers.dto.responses.GetProductResponse;
+import com.example.demo.controllers.dto.requests.ProductRequest;
+import com.example.demo.controllers.dto.responses.ProductResponse;
 import com.example.demo.entities.Category;
 import com.example.demo.entities.Product;
 import com.example.demo.repositories.ICategoryRepository;
@@ -24,11 +23,11 @@ public class ProductService implements IProductService {
     private ICategoryRepository catRep;
 
     @Override
-    public GetProductResponse get(Long id){ return from(id); }
+    public ProductResponse get(Long id){ return from(id); }
 
     @Override
-    public List<GetProductResponse> list(){
-        List<GetProductResponse> responses = new ArrayList<>();
+    public List<ProductResponse> list(){
+        List<ProductResponse> responses = new ArrayList<>();
         return repository
                 .findAll()
                 .stream()
@@ -40,48 +39,48 @@ public class ProductService implements IProductService {
     public void delete(Long id){repository.deleteById(id);}
 
     @Override
-    public GetProductResponse create(CreateProductRequest request){
+    public ProductResponse create(ProductRequest request){
         Product product = from(request);
         return from(repository.save(product));
     }
 
     @Override
-    public GetProductResponse update(Long id, UpdateProductRequest request){
+    public ProductResponse update(Long id, ProductRequest request){
         Product product = repository.findById(id).orElseThrow(() -> new RuntimeException("El producto no existe"));
         product = update(product, request);
         return from(product);
     }
 
-    private Product update(Product product, UpdateProductRequest request){
+    private Product update(Product product, ProductRequest request){
         product.setName(request.getName());
         product.setPrice(request.getPrice());
-        product.setCant(request.getCantprod());
+        product.setStock(request.getStock());
         return repository.save(product);
     }
 
-    private Product from(CreateProductRequest request){
+    private Product from(ProductRequest request){
         Product product = new Product();
 
         product.setName(request.getName());
         product.setPrice(request.getPrice());
-        product.setCant(request.getCantprod());
+        product.setStock(request.getStock());
         Optional<Category> category = catRep.findById(request.getCategoryId());
         category.ifPresent(product::setCategory);
 
         return product;
     }
 
-    private GetProductResponse from(Product product){
-        GetProductResponse response =  new GetProductResponse();
+    private ProductResponse from(Product product){
+        ProductResponse response =  new ProductResponse();
         response.setId(product.getId());
         response.setName(product.getName());
         response.setPrice(product.getPrice());
-        response.setCantprod(product.getCant());
+        response.setStock(product.getStock());
         response.setCategoryId(product.getCategory().getId());
         return response;
     }
 
-    private GetProductResponse from(Long idProduct){
+    private ProductResponse from(Long idProduct){
         return repository
                 .findById(idProduct)
                 .map(this::from)

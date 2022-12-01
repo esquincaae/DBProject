@@ -1,9 +1,8 @@
 package com.example.demo.services;
 
 
-import com.example.demo.controllers.dto.requests.CreateCategoryRequest;
-import com.example.demo.controllers.dto.requests.UpdateCategoryRequest;
-import com.example.demo.controllers.dto.responses.GetCategoryResponse;
+import com.example.demo.controllers.dto.requests.CategoryRequest;
+import com.example.demo.controllers.dto.responses.CategoryResponse;
 import com.example.demo.entities.Category;
 import com.example.demo.repositories.ICategoryRepository;
 import com.example.demo.services.interfaces.ICategoryService;
@@ -20,11 +19,11 @@ public class CategoryService implements ICategoryService {
     private ICategoryRepository repository;
 
     @Override
-    public GetCategoryResponse get(Long id){ return from(id); }
+    public CategoryResponse get(Long id){ return from(id); }
 
     @Override
-    public List<GetCategoryResponse> list(){
-        List<GetCategoryResponse> responses = new ArrayList<>();
+    public List<CategoryResponse> list(){
+        List<CategoryResponse> responses = new ArrayList<>();
         return repository
                 .findAll()
                 .stream()
@@ -36,39 +35,39 @@ public class CategoryService implements ICategoryService {
     public void delete(Long id){repository.deleteById(id);}
 
     @Override
-    public GetCategoryResponse create(CreateCategoryRequest request){
+    public CategoryResponse create(CategoryRequest request){
         Category category = from(request);
         return from(repository.save(category));
     }
 
     @Override
-    public GetCategoryResponse update(Long id, UpdateCategoryRequest request){
+    public CategoryResponse update(Long id, CategoryRequest request){
         Category category = repository.findById(id).orElseThrow(() -> new RuntimeException("La categoria no existe"));
         category = update(category, request);
         return from(category);
     }
 
-    private Category update(Category category, UpdateCategoryRequest request){
+    private Category update(Category category, CategoryRequest request){
         category.setName(request.getName());
         //category.setProduct(request.getProduct());
         return repository.save(category);
     }
 
-    private Category from(CreateCategoryRequest request){
+    private Category from(CategoryRequest request){
         Category category = new Category();
         category.setName(request.getName());
         //category.setPassword(request.getPassword());
         return category;
     }
 
-    private GetCategoryResponse from(Category category){
-        GetCategoryResponse response =  new GetCategoryResponse();
+    private CategoryResponse from(Category category){
+        CategoryResponse response =  new CategoryResponse();
         response.setId(category.getId());
         response.setName(category.getName());
         return response;
     }
 
-    private GetCategoryResponse from(Long idCategory){
+    private CategoryResponse from(Long idCategory){
         return repository
                 .findById(idCategory)
                 .map(this::from)

@@ -5,11 +5,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter @Setter @NoArgsConstructor
-public class CreateCarProductResponse {
+public class CartResponse {
     private Long id;
-    private Long productId;
-    private Integer cantProd;
+    private UserResponse userResponse;
+    private ProductResponse productResponse;
+    private Integer quantity;
     private Double totalPrice;
-    private Long carId;
-    private Long UserId;
 }

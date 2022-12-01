@@ -1,8 +1,7 @@
 package com.example.demo.controllers;
 
-import com.example.demo.controllers.dto.requests.CreateRolRequest;
-import com.example.demo.controllers.dto.requests.UpdateRolRequest;
-import com.example.demo.controllers.dto.responses.GetRolResponse;
+import com.example.demo.controllers.dto.requests.RolRequest;
+import com.example.demo.controllers.dto.responses.RolResponse;
 import com.example.demo.services.interfaces.IRolService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -19,16 +18,16 @@ public class RolController {
     private IRolService service;
 
     @GetMapping
-    public List<GetRolResponse> list(){return service.list();}
+    public List<RolResponse> list(){return service.list();}
 
     @GetMapping("{id}")
-    public GetRolResponse get(@PathVariable Long id){return service.get(id);}
+    public RolResponse get(@PathVariable Long id){return service.get(id);}
 
     @PostMapping
-    public GetRolResponse create(@RequestBody CreateRolRequest request){return service.create(request);}
+    public RolResponse create(@RequestBody RolRequest request){return service.create(request);}
 
     @PutMapping("{id}")
-    public GetRolResponse update(@PathVariable Long id, @RequestBody UpdateRolRequest request) {
+    public RolResponse update(@PathVariable Long id, @RequestBody RolRequest request) {
         return service.update(id, request);
     }
     @DeleteMapping("{id}")

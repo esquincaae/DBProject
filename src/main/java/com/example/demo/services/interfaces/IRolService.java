@@ -1,21 +1,20 @@
 package com.example.demo.services.interfaces;
 
 
-import com.example.demo.controllers.dto.requests.CreateRolRequest;
-import com.example.demo.controllers.dto.requests.UpdateRolRequest;
-import com.example.demo.controllers.dto.responses.GetRolResponse;
+import com.example.demo.controllers.dto.requests.RolRequest;
+import com.example.demo.controllers.dto.responses.RolResponse;
 
 import java.util.List;
 
 public interface IRolService {
 
-    GetRolResponse get(Long id);
+    RolResponse get(Long id);
 
-    List<GetRolResponse> list();
+    List<RolResponse> list();
 
     void delete(Long id);
 
-    GetRolResponse create(CreateRolRequest request);
+    RolResponse create(RolRequest request);
 
-    GetRolResponse update(Long id, UpdateRolRequest request);
+    RolResponse update(Long id, RolRequest request);
 }

@@ -1,8 +1,7 @@
 package com.example.demo.controllers;
 
-import com.example.demo.controllers.dto.requests.CreateProductRequest;
-import com.example.demo.controllers.dto.requests.UpdateProductRequest;
-import com.example.demo.controllers.dto.responses.GetProductResponse;
+import com.example.demo.controllers.dto.requests.ProductRequest;
+import com.example.demo.controllers.dto.responses.ProductResponse;
 import com.example.demo.services.interfaces.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -18,16 +17,16 @@ public class ProductController {
     private IProductService service;
 
     @GetMapping
-    public List<GetProductResponse> list(){return service.list();}
+    public List<ProductResponse> list(){return service.list();}
 
     @GetMapping("{id}")
-    public GetProductResponse get(@PathVariable Long id){return service.get(id);}
+    public ProductResponse get(@PathVariable Long id){return service.get(id);}
 
     @PostMapping
-    public GetProductResponse create(@RequestBody CreateProductRequest request){return service.create(request);}
+    public ProductResponse create(@RequestBody ProductRequest request){return service.create(request);}
 
     @PutMapping("{id}")
-    public GetProductResponse update(@PathVariable Long id, @RequestBody UpdateProductRequest request) {
+    public ProductResponse update(@PathVariable Long id, @RequestBody ProductRequest request) {
         return service.update(id, request);
     }
     @DeleteMapping("{id}")
