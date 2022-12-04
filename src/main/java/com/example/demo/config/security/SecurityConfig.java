@@ -43,13 +43,7 @@ public class SecurityConfig {
 
 
                 .authorizeRequests()
-//                .antMatchers(HttpMethod.PUT, "/api/order/**").hasAnyRole("ADMIN")
-//                .antMatchers(HttpMethod.DELETE, "/api/order/**").hasAnyRole("ADMIN")
-//                .antMatchers(HttpMethod.GET, "/api/product-category/**").permitAll()
-//                .antMatchers("/api/product-status/**").hasAnyRole("ADMIN")
-//                .antMatchers(HttpMethod.POST, "/api/user/**").permitAll()
-//                .antMatchers("/api/file/**").hasAnyRole("ADMIN")
-//                .anyRequest().authenticated()
+                .antMatchers("/user/**").permitAll()
                 .anyRequest().permitAll()
                 .and()
 
