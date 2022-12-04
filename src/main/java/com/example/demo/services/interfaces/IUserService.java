@@ -2,17 +2,18 @@ package com.example.demo.services.interfaces;
 
 import java.util.List;
 import com.example.demo.controllers.dto.requests.UserRequest;
+import com.example.demo.controllers.dto.responses.BaseResponse;
 import com.example.demo.controllers.dto.responses.UserResponse;
 
 public interface IUserService {
     
-    UserResponse get(Long id);
+    BaseResponse get(Long id);
 
-    List<UserResponse> list();
+    BaseResponse list();
 
-    void delete(Long id);
+    BaseResponse delete(Long id);
 
-    UserResponse create(UserRequest request);
+    BaseResponse create(UserRequest request);
 
-    void update(Long id, UserRequest request);
+    BaseResponse update(Long id, UserRequest request);
 }

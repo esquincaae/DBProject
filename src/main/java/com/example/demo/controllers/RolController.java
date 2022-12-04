@@ -1,13 +1,12 @@
 package com.example.demo.controllers;
 
 import com.example.demo.controllers.dto.requests.RolRequest;
-import com.example.demo.controllers.dto.responses.RolResponse;
+import com.example.demo.controllers.dto.responses.BaseResponse;
 import com.example.demo.services.interfaces.IRolService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("role")
@@ -18,21 +17,40 @@ public class RolController {
     private IRolService service;
 
     @GetMapping
-    public List<RolResponse> list(){return service.list();}
+    public ResponseEntity<BaseResponse> list() {
+        BaseResponse baseResponse = service.list();
+
+        return new ResponseEntity<>(baseResponse, baseResponse.getHttpStatus());
+    }
 
     @GetMapping("{id}")
-    public RolResponse get(@PathVariable Long id){return service.get(id);}
+    public ResponseEntity<BaseResponse> get(@PathVariable Long id) {
+
+        BaseResponse baseResponse = service.get(id);
+
+        return new ResponseEntity<>(baseResponse, baseResponse.getHttpStatus());
+    }
 
     @PostMapping
-    public RolResponse create(@RequestBody RolRequest request){return service.create(request);}
+    public ResponseEntity<BaseResponse> create(@RequestBody RolRequest request) {
+        BaseResponse baseResponse = service.create(request);
+
+        return new ResponseEntity<>(baseResponse, baseResponse.getHttpStatus());
+    }
 
     @PutMapping("{id}")
-    public RolResponse update(@PathVariable Long id, @RequestBody RolRequest request) {
-        return service.update(id, request);
+    public ResponseEntity<BaseResponse> update(@PathVariable Long id, @RequestBody RolRequest request) {
+        BaseResponse baseResponse = service.update(id, request);
+
+        return new ResponseEntity<>(baseResponse, baseResponse.getHttpStatus());
     }
+
     @DeleteMapping("{id}")
-    public void delete(@PathVariable Long id){
-        service.delete(id);
+    public ResponseEntity<BaseResponse> delete(@PathVariable Long id) {
+
+        BaseResponse baseResponse = service.delete(id);
+
+        return new ResponseEntity<>(baseResponse, baseResponse.getHttpStatus());
     }
 
 }
