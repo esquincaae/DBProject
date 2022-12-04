@@ -36,11 +36,19 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public BaseResponse list() {
-        List<Product> products = repository
-                .findAll()
-                .stream()
-                .collect(Collectors.toList());
+    public BaseResponse list(String keyword) {
+        List<Product> products;
+
+        if(keyword == null) {
+            products = repository
+                    .findAll()
+                    .stream()
+                    .collect(Collectors.toList());
+        } else {
+            products = repository.findAllByNameContainingIgnoreCase(keyword)
+                    .stream()
+                    .collect(Collectors.toList());
+        }
 
         return BaseResponse.builder()
                 .data(products)
@@ -62,7 +70,7 @@ public class ProductService implements IProductService {
 
     @Override
     public BaseResponse create(ProductRequest request) {
-        Product product = from(request);
+        Product product = repository.save(from(request));
 
         return BaseResponse.builder()
                 .data(product)
@@ -87,6 +95,7 @@ public class ProductService implements IProductService {
         product.setName(request.getName());
         product.setPrice(request.getPrice());
         product.setStock(request.getStock());
+        product.setImageUrl(request.getImageUrl());
         return repository.save(product);
     }
 
@@ -96,6 +105,7 @@ public class ProductService implements IProductService {
         product.setName(request.getName());
         product.setPrice(request.getPrice());
         product.setStock(request.getStock());
+        product.setImageUrl(request.getImageUrl());
         Optional<Category> category = catRep.findById(request.getCategoryId());
         category.ifPresent(product::setCategory);
 

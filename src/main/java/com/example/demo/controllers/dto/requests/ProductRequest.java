@@ -13,4 +13,6 @@ public class ProductRequest {
     private Double price;
     @NotNull
     private Long categoryId;
+    @NotNull
+    private String imageUrl;
 }
