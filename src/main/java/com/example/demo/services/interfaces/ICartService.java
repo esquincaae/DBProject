@@ -1,18 +1,16 @@
 package com.example.demo.services.interfaces;
 
 import com.example.demo.controllers.dto.requests.CartRequest;
-import com.example.demo.controllers.dto.responses.CartResponse;
-
-import java.util.List;
+import com.example.demo.controllers.dto.responses.BaseResponse;
 
 public interface ICartService {
 
-    List<CartResponse> list(Long id);
+    BaseResponse list(Long id);
 
-    void delete(Long id);
+    BaseResponse delete(Long id);
 
-    CartResponse create(CartRequest request);
+    BaseResponse create(CartRequest request);
 
-    void update(Long id, CartRequest request);
+    BaseResponse update(Long id, CartRequest request);
 
 }

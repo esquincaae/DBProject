@@ -1,6 +1,7 @@
 package com.example.demo.services;
 
 import com.example.demo.controllers.dto.requests.CartRequest;
+import com.example.demo.controllers.dto.responses.BaseResponse;
 import com.example.demo.controllers.dto.responses.CartResponse;
 import com.example.demo.controllers.dto.responses.ProductResponse;
 import com.example.demo.controllers.dto.responses.UserResponse;
@@ -12,6 +13,7 @@ import com.example.demo.repositories.IUserRepository;
 import com.example.demo.repositories.ProductRepository;
 import com.example.demo.services.interfaces.ICartService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -28,16 +30,22 @@ public class CartService implements ICartService {
 
 
     @Override
-    public List<CartResponse> list(Long userId){
-      return from(cartRepository.findAllByUserId(userId));
+    public BaseResponse list(Long userId) {
+        List<Cart> carts = cartRepository.findAllByUserId(userId);
+
+        return BaseResponse.builder()
+                .data(carts)
+                .message("Successful operation")
+                .success(Boolean.TRUE)
+                .httpStatus(HttpStatus.OK).build();
     }
 
 
-    private List<CartResponse> from(List<Cart> carts){
+    private List<CartResponse> from(List<Cart> carts) {
 
         List<CartResponse> responses = new ArrayList<>();
 
-        for (Cart cart: carts) {
+        for (Cart cart : carts) {
             CartResponse cartResponse = new CartResponse();
             ProductResponse productResponse = new ProductResponse();
             UserResponse userResponse = new UserResponse();
@@ -64,23 +72,35 @@ public class CartService implements ICartService {
     }
 
     @Override
-    public void delete(Long id){
-        cartRepository.deleteById(id);}
+    public BaseResponse delete(Long id) {
+        cartRepository.deleteById(id);
+
+        return BaseResponse.builder()
+                .data(null)
+                .message("Successful operation")
+                .success(Boolean.TRUE)
+                .httpStatus(HttpStatus.NO_CONTENT).build();
+    }
 
     @Override
-    public CartResponse create(CartRequest cartRequest) {
+    public BaseResponse create(CartRequest cartRequest) {
         User user = userRepository.findById(cartRequest.getUserId()).get();
         Product product = productRepository.findById(cartRequest.getProductId()).get();
         Cart cart = new Cart();
         cart.setUser(user);
         cart.setProduct(product);
         cart.setQuantity(cartRequest.getQuantity());
-        cartRepository.save(cart);
-        return from(cart, product, user);
+        Cart cartSaved = cartRepository.save(cart);
+
+        return BaseResponse.builder()
+                .data(cartSaved)
+                .message("Successful operation")
+                .success(Boolean.TRUE)
+                .httpStatus(HttpStatus.CREATED).build();
     }
 
     @Override
-    public void update(Long cartId, CartRequest cartRequest) {
+    public BaseResponse update(Long cartId, CartRequest cartRequest) {
         Cart cart = cartRepository.findById(cartId).get();
         Product product = productRepository.findById(cartRequest.getProductId()).get();
         if (!cartRepository.existsById(cartId))
@@ -88,7 +108,13 @@ public class CartService implements ICartService {
 
         cart.setProduct(product);
         cart.setQuantity(cartRequest.getQuantity());
-        cartRepository.save(cart);
+        Cart cartSaved = cartRepository.save(cart);
+
+        return BaseResponse.builder()
+                .data(cartSaved)
+                .message("Successful operation")
+                .success(Boolean.TRUE)
+                .httpStatus(HttpStatus.OK).build();
     }
     /*
     public CartResponse update(Long id, CartRequest request){
@@ -97,7 +123,7 @@ public class CartService implements ICartService {
         return from(cart);
     }*/
 
-    private Cart update(Cart carProduct, CartRequest request){
+    private Cart update(Cart carProduct, CartRequest request) {
         carProduct.setQuantity(request.getQuantity());
         return carProduct;
     }
@@ -129,4 +155,4 @@ public class CartService implements ICartService {
         return cartResponse;
     }
 
-  }
+}

@@ -1,13 +1,11 @@
 package com.example.demo.controllers;
 
 import com.example.demo.controllers.dto.requests.CartRequest;
-import com.example.demo.controllers.dto.responses.CartResponse;
+import com.example.demo.controllers.dto.responses.BaseResponse;
 import com.example.demo.services.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("cart")
@@ -17,8 +15,10 @@ public class CartController {
     private CartService service;
 
     @GetMapping("{id}")
-    public List<CartResponse> list(@PathVariable Long id) {
-        return service.list(id);
+    public ResponseEntity<BaseResponse> list(@PathVariable Long id) {
+        BaseResponse baseResponse = service.list(id);
+
+        return new ResponseEntity<>(baseResponse, baseResponse.getHttpStatus());
     }
 
     /*@GetMapping("{id}")
@@ -27,20 +27,25 @@ public class CartController {
     }*/
 
     @PostMapping
-    public CartResponse create(@RequestBody CartRequest request) {
-        return service.create(request);
+    public ResponseEntity<BaseResponse> create(@RequestBody CartRequest request) {
+        BaseResponse baseResponse = service.create(request);
+
+        return new ResponseEntity<>(baseResponse, baseResponse.getHttpStatus());
     }
 
     @PutMapping("{id}")
-    public ResponseEntity update(@PathVariable Long id, @RequestBody CartRequest request) {
-        service.update(id, request);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<BaseResponse> update(@PathVariable Long id, @RequestBody CartRequest request) {
+        BaseResponse baseResponse = service.update(id, request);
+
+        return new ResponseEntity<>(baseResponse, baseResponse.getHttpStatus());
     }
 
 
     @DeleteMapping("{id}")
-    public void delete(@PathVariable Long id){
-        service.delete(id);
+    public ResponseEntity<BaseResponse> delete(@PathVariable Long id) {
+        BaseResponse baseResponse = service.delete(id);
+
+        return new ResponseEntity<>(baseResponse, baseResponse.getHttpStatus());
     }
 
 }
