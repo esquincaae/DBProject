@@ -25,5 +25,16 @@ public class Cart {
 
     private Integer quantity;
 
+    private Double totalPrice;
+
+    @PrePersist
+    public void prePersist() {
+        setTotalPrice(quantity * totalPrice);
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        setTotalPrice(quantity * totalPrice);
+    }
 
 }

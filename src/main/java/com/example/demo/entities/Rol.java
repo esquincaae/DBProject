@@ -1,5 +1,6 @@
 package com.example.demo.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,5 +21,6 @@ public class Rol {
 
  */
     @OneToMany(mappedBy = "role")
+    @JsonManagedReference
     private List<User> users;
 }
