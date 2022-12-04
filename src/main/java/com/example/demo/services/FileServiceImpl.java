@@ -20,14 +20,11 @@ import java.util.Objects;
 @Service
 public class FileServiceImpl implements IFileService {
 
-    @Value("${CLOUDINARY_NAME}")
-    private String cloudName;
+    private final String cloudName = "1234567890";
 
-    @Value("${CLOUDINARY_API_KEY}")
-    private String apiKey;
+    private final String apiKey = "1234567890";
 
-    @Value("${CLOUDINARY_API_SECRET}")
-    private String apiSecret;
+    private final String apiSecret = "1234567890";
 
     private final Cloudinary cloudinary = new Cloudinary();
 
