@@ -36,11 +36,19 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public BaseResponse list() {
-        List<Product> products = repository
-                .findAll()
-                .stream()
-                .collect(Collectors.toList());
+    public BaseResponse list(String keyword) {
+        List<Product> products;
+
+        if(keyword == null) {
+            products = repository
+                    .findAll()
+                    .stream()
+                    .collect(Collectors.toList());
+        } else {
+            products = repository.findAllByNameContainingIgnoreCase(keyword)
+                    .stream()
+                    .collect(Collectors.toList());
+        }
 
         return BaseResponse.builder()
                 .data(products)

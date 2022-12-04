@@ -7,7 +7,7 @@ public interface IProductService {
 
     BaseResponse get(Long id);
 
-    BaseResponse list();
+    BaseResponse list(String keyword);
 
     BaseResponse delete(Long id);
 
