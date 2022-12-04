@@ -15,6 +15,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Collections;
 
 public class JWTAuthenticationFilter extends OncePerRequestFilter {
     @Autowired
@@ -32,7 +33,7 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
             UserDetailsImpl userDetails = (UserDetailsImpl) service.loadUserByUsername(username);
 
             UsernamePasswordAuthenticationToken authenticationToken =
-                    new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                    new UsernamePasswordAuthenticationToken(userDetails, null, Collections.emptyList());
 
             authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
