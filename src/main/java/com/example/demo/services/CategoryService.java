@@ -58,7 +58,7 @@ public class CategoryService implements ICategoryService {
 
     @Override
     public BaseResponse create(CategoryRequest request) {
-        Category category = from(request);
+        Category category = repository.save(from(request));
 
         return BaseResponse.builder()
                 .data(category)

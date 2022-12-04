@@ -70,7 +70,7 @@ public class ProductService implements IProductService {
 
     @Override
     public BaseResponse create(ProductRequest request) {
-        Product product = from(request);
+        Product product = repository.save(from(request));
 
         return BaseResponse.builder()
                 .data(product)
@@ -95,6 +95,7 @@ public class ProductService implements IProductService {
         product.setName(request.getName());
         product.setPrice(request.getPrice());
         product.setStock(request.getStock());
+        product.setImageUrl(request.getImageUrl());
         return repository.save(product);
     }
 
@@ -104,6 +105,7 @@ public class ProductService implements IProductService {
         product.setName(request.getName());
         product.setPrice(request.getPrice());
         product.setStock(request.getStock());
+        product.setImageUrl(request.getImageUrl());
         Optional<Category> category = catRep.findById(request.getCategoryId());
         category.ifPresent(product::setCategory);
 
