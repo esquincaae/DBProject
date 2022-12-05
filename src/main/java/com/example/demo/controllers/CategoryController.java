@@ -1,14 +1,12 @@
 package com.example.demo.controllers;
 
-import com.example.demo.controllers.dto.requests.CreateCategoryRequest;
-import com.example.demo.controllers.dto.requests.UpdateCategoryRequest;
-import com.example.demo.controllers.dto.responses.GetCategoryResponse;
+import com.example.demo.controllers.dto.requests.CategoryRequest;
+import com.example.demo.controllers.dto.responses.BaseResponse;
 import com.example.demo.services.interfaces.ICategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("category")
@@ -19,21 +17,38 @@ public class CategoryController {
     private ICategoryService service;
 
     @GetMapping
-    public List<GetCategoryResponse> list(){return service.list();}
+    public ResponseEntity<BaseResponse> list() {
+        BaseResponse baseResponse = service.list();
+
+        return new ResponseEntity<>(baseResponse, baseResponse.getHttpStatus());
+    }
 
     @GetMapping("{id}")
-    public GetCategoryResponse get(@PathVariable Long id){return service.get(id);}
+    public ResponseEntity<BaseResponse> get(@PathVariable Long id) {
+        BaseResponse baseResponse = service.get(id);
+
+        return new ResponseEntity<>(baseResponse, baseResponse.getHttpStatus());
+    }
 
     @PostMapping
-    public GetCategoryResponse create(@RequestBody CreateCategoryRequest request){return service.create(request);}
+    public ResponseEntity<BaseResponse> create(@RequestBody CategoryRequest request) {
+        BaseResponse baseResponse = service.create(request);
+
+        return new ResponseEntity<>(baseResponse, baseResponse.getHttpStatus());
+    }
 
     @PutMapping("{id}")
-    public GetCategoryResponse update(@PathVariable Long id, @RequestBody UpdateCategoryRequest request) {
-        return service.update(id, request);
+    public ResponseEntity<BaseResponse> update(@PathVariable Long id, @RequestBody CategoryRequest request) {
+        BaseResponse baseResponse = service.update(id, request);
+
+        return new ResponseEntity<>(baseResponse, baseResponse.getHttpStatus());
     }
+
     @DeleteMapping("{id}")
-    public void delete(@PathVariable Long id){
-        service.delete(id);
+    public ResponseEntity<BaseResponse> delete(@PathVariable Long id) {
+        BaseResponse baseResponse = service.delete(id);
+
+        return new ResponseEntity<>(baseResponse, baseResponse.getHttpStatus());
     }
 
 }

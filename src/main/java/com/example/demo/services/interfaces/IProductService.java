@@ -1,19 +1,17 @@
 package com.example.demo.services.interfaces;
 
-import com.example.demo.controllers.dto.requests.CreateProductRequest;
-import com.example.demo.controllers.dto.requests.UpdateProductRequest;
-import com.example.demo.controllers.dto.responses.GetProductResponse;
-import java.util.List;
+import com.example.demo.controllers.dto.requests.ProductRequest;
+import com.example.demo.controllers.dto.responses.BaseResponse;
 
 public interface IProductService {
 
-    GetProductResponse get(Long id);
+    BaseResponse get(Long id);
 
-    List<GetProductResponse> list();
+    BaseResponse list(String keyword);
 
-    void delete(Long id);
+    BaseResponse delete(Long id);
 
-    GetProductResponse create(CreateProductRequest request);
+    BaseResponse create(ProductRequest request);
 
-    GetProductResponse update(Long id, UpdateProductRequest request);
+    BaseResponse update(Long id, ProductRequest request);
 }
