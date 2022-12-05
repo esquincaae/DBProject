@@ -89,7 +89,7 @@ public class CartService implements ICartService {
         User user = userRepository.findById(cartRequest.getUserId()).get();
         Product product = productRepository.findById(cartRequest.getProductId()).get();
 
-        Optional<Cart> optionalCart = cartRepository.findByProduct_Id(cartRequest.getId());
+        Optional<Cart> optionalCart = cartRepository.findByProduct_Id(cartRequest.getProductId());
 
         if (optionalCart.isEmpty()) {
             cart = new Cart();
