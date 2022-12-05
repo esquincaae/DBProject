@@ -2,6 +2,7 @@ package com.example.demo.entities.pivots;
 
 import com.example.demo.entities.Product;
 import com.example.demo.entities.User;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,9 +22,16 @@ public class Cart {
 
     @ManyToOne
     @JoinColumn(name = "product_id", referencedColumnName = "id")
+    @JsonBackReference
     private Product product;
 
     private Integer quantity;
 
+    private Double totalPrice;
+
+    @PrePersist @PreUpdate
+    public void prePersist() {
+        setTotalPrice(quantity * product.getPrice());
+    }
 
 }

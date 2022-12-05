@@ -1,6 +1,7 @@
 package com.example.demo.services;
 
 import com.example.demo.controllers.dto.requests.ProductRequest;
+import com.example.demo.controllers.dto.responses.BaseResponse;
 import com.example.demo.controllers.dto.responses.ProductResponse;
 import com.example.demo.entities.Category;
 import com.example.demo.entities.Product;
@@ -8,8 +9,9 @@ import com.example.demo.repositories.ICategoryRepository;
 import com.example.demo.repositories.ProductRepository;
 import com.example.demo.services.interfaces.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -23,55 +25,95 @@ public class ProductService implements IProductService {
     private ICategoryRepository catRep;
 
     @Override
-    public ProductResponse get(Long id){ return from(id); }
+    public BaseResponse get(Long id) {
+        Product product = findAndEnsureExist(id);
 
-    @Override
-    public List<ProductResponse> list(){
-        List<ProductResponse> responses = new ArrayList<>();
-        return repository
-                .findAll()
-                .stream()
-                .map(this::from)
-                .collect(Collectors.toList());
+        return BaseResponse.builder()
+                .data(product)
+                .message("Successful operation")
+                .success(Boolean.TRUE)
+                .httpStatus(HttpStatus.OK).build();
     }
 
     @Override
-    public void delete(Long id){repository.deleteById(id);}
+    public BaseResponse list(String keyword) {
+        List<Product> products;
 
-    @Override
-    public ProductResponse create(ProductRequest request){
-        Product product = from(request);
-        return from(repository.save(product));
+        if(keyword == null) {
+            products = repository
+                    .findAll()
+                    .stream()
+                    .collect(Collectors.toList());
+        } else {
+            products = repository.findAllByNameContainingIgnoreCase(keyword)
+                    .stream()
+                    .collect(Collectors.toList());
+        }
+
+        return BaseResponse.builder()
+                .data(products)
+                .message("Successful operation")
+                .success(Boolean.TRUE)
+                .httpStatus(HttpStatus.OK).build();
     }
 
     @Override
-    public ProductResponse update(Long id, ProductRequest request){
+    public BaseResponse delete(Long id) {
+        repository.deleteById(id);
+
+        return BaseResponse.builder()
+                .data(null)
+                .message("Successful operation")
+                .success(Boolean.TRUE)
+                .httpStatus(HttpStatus.NO_CONTENT).build();
+    }
+
+    @Override
+    public BaseResponse create(ProductRequest request) {
+        Product product = repository.save(from(request));
+
+        return BaseResponse.builder()
+                .data(product)
+                .message("Successful operation")
+                .success(Boolean.TRUE)
+                .httpStatus(HttpStatus.CREATED).build();
+    }
+
+    @Override
+    public BaseResponse update(Long id, ProductRequest request) {
         Product product = repository.findById(id).orElseThrow(() -> new RuntimeException("El producto no existe"));
         product = update(product, request);
-        return from(product);
+
+        return BaseResponse.builder()
+                .data(product)
+                .message("Successful operation")
+                .success(Boolean.TRUE)
+                .httpStatus(HttpStatus.OK).build();
     }
 
-    private Product update(Product product, ProductRequest request){
+    private Product update(Product product, ProductRequest request) {
         product.setName(request.getName());
         product.setPrice(request.getPrice());
         product.setStock(request.getStock());
+        product.setImageUrl(request.getImageUrl());
         return repository.save(product);
     }
 
-    private Product from(ProductRequest request){
+    private Product from(ProductRequest request) {
         Product product = new Product();
 
         product.setName(request.getName());
         product.setPrice(request.getPrice());
         product.setStock(request.getStock());
+        product.setImageUrl(request.getImageUrl());
         Optional<Category> category = catRep.findById(request.getCategoryId());
         category.ifPresent(product::setCategory);
 
         return product;
     }
 
-    private ProductResponse from(Product product){
-        ProductResponse response =  new ProductResponse();
+    private ProductResponse from(Product product) {
+        ProductResponse response = new ProductResponse();
         response.setId(product.getId());
         response.setName(product.getName());
         response.setPrice(product.getPrice());
@@ -80,10 +122,9 @@ public class ProductService implements IProductService {
         return response;
     }
 
-    private ProductResponse from(Long idProduct){
+    private Product findAndEnsureExist(Long idProduct) {
         return repository
                 .findById(idProduct)
-                .map(this::from)
                 .orElseThrow(() -> new RuntimeException("El producto no existe"));
     }
 }

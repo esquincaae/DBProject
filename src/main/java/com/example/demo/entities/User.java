@@ -1,6 +1,7 @@
 package com.example.demo.entities;
 
 import com.example.demo.entities.pivots.Cart;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -18,5 +19,6 @@ public class User {
 
     @ManyToOne
     @JoinColumn (name = "role_id", referencedColumnName = "id")
+    @JsonBackReference
     private Rol role;
 }
