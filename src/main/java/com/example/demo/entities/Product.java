@@ -27,6 +27,7 @@ public class Product {
     private Category category;
 
     @OneToMany(mappedBy = "product")
+    @JsonManagedReference 
     private List<Cart> carts;
 
 }
