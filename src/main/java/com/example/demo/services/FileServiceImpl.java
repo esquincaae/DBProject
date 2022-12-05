@@ -1,14 +1,13 @@
 package com.example.demo.services;
 
 import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import com.example.demo.controllers.dto.responses.BaseResponse;
 import com.example.demo.services.interfaces.IFileService;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -19,14 +18,10 @@ import java.util.Objects;
 
 @Service
 public class FileServiceImpl implements IFileService {
-
-    private final String cloudName = "1234567890";
-
-    private final String apiKey = "1234567890";
-
-    private final String apiSecret = "1234567890";
-
-    private final Cloudinary cloudinary = new Cloudinary();
+    private final Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
+            "cloud_name", "dmwn1o14i",
+            "api_key", "892637196132421",
+            "api_secret", "s08xvfEC4E93x5sjISdB5Lonx5U"));
 
     private final Map<String, String> cloudinaryConfig = new HashMap<>();
 
@@ -84,13 +79,5 @@ public class FileServiceImpl implements IFileService {
         Map response = cloudinary.uploader().upload(file, cloudinaryConfig);
 
         return (String) response.get("url");
-    }
-
-    @PostConstruct
-    private void initializeCloudinary() {
-        cloudinaryConfig.put("cloud_name", cloudName);
-        cloudinaryConfig.put("api_key", apiKey);
-        cloudinaryConfig.put("api_secret", apiSecret);
-        cloudinaryConfig.put("folder", "/images");
     }
 }
