@@ -11,7 +11,4 @@ import java.util.Optional;
 public interface IUserRepository extends JpaRepository<User, Long>{
 
     Optional<User> findByEmail(String email);
-
-    @Query(value = "SELECT * FROM user WHERE user.email = :email && user.password = :password ;", nativeQuery = true)
-    User validate(String email, String password);
 }
