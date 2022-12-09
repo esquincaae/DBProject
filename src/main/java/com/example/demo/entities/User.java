@@ -1,9 +1,10 @@
 package com.example.demo.entities;
 
+import com.example.demo.entities.pivots.Cart;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name = "user")
@@ -16,9 +17,8 @@ public class User {
     private String email;
     private String password;
 
-    @OneToMany(mappedBy = "user_id")
-    private List<Car> cars;
     @ManyToOne
     @JoinColumn (name = "role_id", referencedColumnName = "id")
+    @JsonBackReference
     private Rol role;
 }

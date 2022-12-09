@@ -1,19 +1,16 @@
 package com.example.demo.services.interfaces;
 
-import com.example.demo.controllers.dto.requests.CreateCategoryRequest;
-import com.example.demo.controllers.dto.requests.UpdateCategoryRequest;
-import com.example.demo.controllers.dto.responses.GetCategoryResponse;
-
-import java.util.List;
+import com.example.demo.controllers.dto.requests.CategoryRequest;
+import com.example.demo.controllers.dto.responses.BaseResponse;
 
 public interface ICategoryService {
-    GetCategoryResponse get(Long id);
+    BaseResponse get(Long id);
 
-    List<GetCategoryResponse> list();
+    BaseResponse list();
 
-    void delete(Long id);
+    BaseResponse delete(Long id);
 
-    GetCategoryResponse create(CreateCategoryRequest request);
+    BaseResponse create(CategoryRequest request);
 
-    GetCategoryResponse update(Long id, UpdateCategoryRequest request);
+    BaseResponse update(Long id, CategoryRequest request);
 }

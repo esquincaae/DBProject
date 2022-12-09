@@ -4,11 +4,10 @@ import com.example.demo.entities.Rol;
 import lombok.*;
 
 @Getter @Setter @NoArgsConstructor
-public class CreateUserResponse {
+public class UserResponse {
     private String email;
     private Long id;
-    private String password;
-    private Long rol;
+    private Long rolId;
 
 
 }
